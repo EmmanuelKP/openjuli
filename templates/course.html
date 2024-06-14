@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>JULI AI</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel= "stylesheet" type= "text/css" href= "/style.css">
+	</head>
+	<body>		
+		<div class="navbar">
+			<a href="/signout">Sign Out</a>
+			<a href="/">Home</a>
+			<h3>Hello {{ username }} - JULI AI</h3>
+		</div>
+
+		<div class="main">
+			<script>
+				document.addEventListener('DOMContentLoaded', function () {
+					const messagesContainer = document.getElementById('messages');
+					const userInput = document.getElementById('input');
+					const sendBtn = document.getElementById('button');
+			
+					sendBtn.addEventListener('click', sendMessage);
+					userInput.addEventListener('keypress', function(event) {
+						if (event.key === 'Enter') {
+							sendMessage();
+						}
+					});
+			
+					function sendMessage() {
+						const userMessage = userInput.value.trim();
+						if (userMessage !== '') {
+							addMessage('user', userMessage);
+							userInput.value = '';
+			
+							fetch('/chat', {
+								method: 'POST',
+								headers: {
+									'Content-Type': 'application/json'
+								},
+								body: JSON.stringify({user_input: userMessage})
+							})
+							.then(response => response.json())
+							.then(data => {
+								const modelResponse = data.response;
+								addMessage('model', modelResponse);
+							})
+							.catch(error => {
+								console.error('Error:', error);
+								addMessage('model', 'An error occurred. Please wait.');
+							});
+						}
+					}
+			
+					function addMessage(role, text) {
+						const messageElement = document.createElement('div');
+						messageElement.classList.add('message');
+						messageElement.classList.add(role);
+						messageElement.innerText = text;
+						messagesContainer.appendChild(messageElement);
+						messagesContainer.scrollTop = messagesContainer.scrollHeight;
+					}
+				});
+			</script>
+			<div class="chat-container" id="chat-container">
+				<div class="messages" id="messages"></div>
+				<input class="input" type="text" id="input" placeholder="Ask me questions">
+				<button class="buttonchat" id="button">Ask</button>
+			</div>
+		</div>
+		<div class="footer">
+			Copyright © foss club 2024. All rights reserved
+		</div>
+	</body>
+</html>

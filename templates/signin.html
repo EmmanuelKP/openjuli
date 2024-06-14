@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Sign In</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel= "stylesheet" type= "text/css" href= "/style.css">
+	</head>
+	<body>	
+		<div class="navbar">
+			<a href="/#privacy-policy">Privacy</a>
+			<a href="/#about">About</a>
+			<a href="/">Home</a>
+		</div>
+
+		<div class="main">
+			<h2>Create an account. It's easy <a href="/signup" class="buttonsignin">Sign Up</a></h2>
+				<div class="container">
+					<h3>If you have an account already sign in below</h3>
+					<form id="login_form" action="/signin" method="post">
+						<input class="input" name="email" type="text" placeholder="Email" required>
+						<br>
+						<input class="input" name="password" type="password" placeholder="Password" required>
+						<br>
+						<button type="submit" class="buttonsignin">Sign In</button>
+					</form>
+				</div>
+		</div>
+		<div class="footer">
+			Copyright © foss club 2024. All rights reserved
+		</div>
+	</body>
+</html>
